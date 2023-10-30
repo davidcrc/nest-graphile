@@ -10,11 +10,12 @@ const postgraphileOptions: PostGraphileOptions = {
   showErrorStack: 'json',
   extendedErrors: ['hint', 'detail', 'errcode'],
   appendPlugins: [require('@graphile-contrib/pg-simplify-inflector')],
-  exportGqlSchemaPath: './src/graphql/schema.graphql',
+  exportGqlSchemaPath: './src/graphql/postgraphile-schema.graphql',
   graphiql: true,
   enhanceGraphiql: true,
   enableQueryBatching: true,
   legacyRelations: 'omit',
+  // graphqlRoute: '/graphql',
   // pgSettings: async (req) => {
   //   console.log('emm', req. );
   //   return {};

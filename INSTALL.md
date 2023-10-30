@@ -37,3 +37,7 @@ nest g module postgraphile
 nest g controller postgraphile
 
 npx postgraphile -c 'postgresql://postgres:''@localhost:5432/nestjs-postgraphile?schema=public' --watch --enhance-graphiql --dynamic-json
+
+<!--  -->
+
+yarn add @nestjs/graphql @nestjs/apollo @apollo/server graphql
