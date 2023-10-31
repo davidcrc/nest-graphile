@@ -8,4 +8,11 @@ export class UsersResolver {
       message: 'HOlas',
     };
   }
+
+  @Query(() => String)
+  user_custom() {
+    return {
+      user: { name: 'jj' },
+    };
+  }
 }

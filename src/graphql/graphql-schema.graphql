@@ -4,4 +4,5 @@
 
 type Query {
   get: String!
+  user_custom: String!
 }

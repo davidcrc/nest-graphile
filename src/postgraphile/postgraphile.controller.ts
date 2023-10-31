@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Next, Res } from '@nestjs/common';
+import { Controller, Get, Req, Next, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PostGraphileResponseNode } from 'postgraphile';
 import { middleware } from '../common/middleware/postgraphile.middleware';
@@ -12,10 +12,10 @@ export class PostgraphileController {
     );
   }
 
-  @Post(middleware.graphqlRoute)
-  graphql(@Req() request: Request, @Res() response: Response, @Next() next) {
-    middleware.graphqlRouteHandler(
-      new PostGraphileResponseNode(request, response, next),
-    );
-  }
+  // @Post(middleware.graphqlRoute)
+  // graphql(@Req() request: Request, @Res() response: Response, @Next() next) {
+  //   middleware.graphqlRouteHandler(
+  //     new PostGraphileResponseNode(request, response, next),
+  //   );
+  // }
 }

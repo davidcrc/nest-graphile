@@ -6,13 +6,36 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { UsersResolver } from './app.resolver';
+import { GraphQLSchema } from 'graphql';
+import { mergeSchemas } from '@graphql-tools/schema';
+import { loadSchema } from '@graphql-tools/load';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 
 @Module({
   imports: [
     PostgraphileModule,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/graphql/graphql-schema.graphql'),
+      useFactory: async () => {
+        const remoteSchema = await loadSchema(
+          join(process.cwd(), './src/graphql/postgraphile-schema.graphql'),
+          { loaders: [new GraphQLFileLoader()] },
+        );
+
+        return {
+          playground: process.env.NODE_ENV !== 'production',
+          autoSchemaFile: join(
+            process.cwd(),
+            'src/graphql/graphql-schema.graphql',
+          ),
+          transformAutoSchemaFiles: true,
+          transformSchema: async (schema: GraphQLSchema) => {
+            return mergeSchemas({
+              schemas: [schema, remoteSchema],
+            });
+          },
+        };
+      },
     }),
   ],
   controllers: [AppController],
